@@ -9,11 +9,13 @@
 import UIKit
 import MapKit
 
-class PhotoMapViewController: UIViewController {
+class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var camerButton: UIButton!
-    
+    let imagePicker = UIImagePickerController()
+    var originalImage: UIImage? = nil
+    var editedImage: UIImage? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +23,6 @@ class PhotoMapViewController: UIViewController {
         let sfRegion = MKCoordinateRegionMake(CLLocationCoordinate2DMake(37.783333, -122.416667),
                                               MKCoordinateSpanMake(0.1, 0.1))
         mapView.setRegion(sfRegion, animated: false)
-        //mapView.bringSubview(toFront: camerButton)
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,10 +32,35 @@ class PhotoMapViewController: UIViewController {
     
     
     @IBAction func clickedCamera(_ sender: UIButton) {
-        print("I am here")
+        getCamera()
     }
     
+    func getCamera() {
+        
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            imagePicker.sourceType = .camera
+        } else {
+            imagePicker.sourceType = .photoLibrary
+        }
+        
+        present(imagePicker, animated: true, completion: nil)
+    }
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let originalImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        let editedImage = info[UIImagePickerControllerEditedImage] as! UIImage
+        
+        // Do something with the images (based on your use case)
+        self.originalImage = originalImage
+        self.editedImage = editedImage
+        
+        // Dismiss UIImagePickerController to go back to your original view controller
+        dismiss(animated: true, completion: nil)
+        performSegue(withIdentifier: "tagSegue", sender: nil)
+    }
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
