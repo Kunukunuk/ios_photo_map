@@ -29,7 +29,11 @@ class PhotoMapViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    
+    @IBAction func clickedCamera(_ sender: UIButton) {
+        print("I am here")
+    }
+    
     
     // MARK: - Navigation
 
