@@ -111,8 +111,14 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
         let imageView = annotationView?.leftCalloutAccessoryView as! UIImageView
         imageView.image = thumbnail
         
+        annotationView?.rightCalloutAccessoryView = UIButton(type: .infoLight)
+        
         
         return annotationView
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        performSegue(withIdentifier: "fullImageSegue", sender: nil)
     }
     
     // MARK: - Navigation
@@ -122,6 +128,9 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
         if segue.identifier == "tagSegue" {
             let destionationVC = segue.destination as! LocationsViewController
             destionationVC.delegate = self
+        } else if segue.identifier == "fullImageSegue" {
+            let destionationVC = segue.destination as! FullImageViewController
+            destionationVC.imageToDisplay = editedImage
         }
     }
     

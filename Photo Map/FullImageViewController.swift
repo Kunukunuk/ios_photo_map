@@ -10,11 +10,12 @@ import UIKit
 
 class FullImageViewController: UIViewController {
 
-    let imagePicker = UIImagePickerController()
-        
+    @IBOutlet weak var fullImageView: UIImageView!
+    var imageToDisplay: UIImage? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        fullImageView.image = imageToDisplay
     }
 
     override func didReceiveMemoryWarning() {
