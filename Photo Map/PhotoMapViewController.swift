@@ -80,9 +80,7 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
         let photoAnnotation = PhotoAnnotation()
         photoAnnotation.coordinate = locationCoordinates
         photoAnnotation.photo = editedImage
-//        let annotation = MKPointAnnotation()
-//        annotation.coordinate = locationCoordinates
-//        annotation.title = "Picture!"
+
         mapView.addAnnotation(photoAnnotation)
         
     }
@@ -92,7 +90,7 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
         
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseID)
         if (annotationView == nil) {
-            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
             annotationView!.canShowCallout = true
             annotationView!.leftCalloutAccessoryView = UIImageView(frame: CGRect(x:0, y:0, width: 50, height:50))
         }
@@ -112,6 +110,7 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
         imageView.image = thumbnail
         
         annotationView?.rightCalloutAccessoryView = UIButton(type: .infoLight)
+        annotationView?.image = thumbnail
         
         
         return annotationView
